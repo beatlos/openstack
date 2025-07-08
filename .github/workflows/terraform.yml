@@ -85,6 +85,11 @@ jobs:
     - name: Terraform Format
       run: terraform fmt -check
 
+    - name: TEST
+      run: |
+          pwd
+          ls -la
+
     # Generates an execution plan for Terraform
     - name: Terraform Plan
       run: terraform plan -input=false
