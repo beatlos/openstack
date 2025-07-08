@@ -77,6 +77,9 @@ jobs:
     - name: Terraform Init
       run: terraform -chdir=terraform init
 
+    - name: Terraform fmt
+      run: terraform -chdir=terraform fmt 
+
     # Checks that all Terraform configuration files adhere to a canonical format
     - name: Terraform Format
       run: terraform -chdir=terraform fmt -check
