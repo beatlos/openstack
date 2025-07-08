@@ -1,9 +1,9 @@
 terraform {
   cloud {
-    organization = "beatlos"
+    organization = "openstack-poc"
 
     workspaces {
-      name = "openstack-poc"
+      name = "dev"
     }
   }
 }
