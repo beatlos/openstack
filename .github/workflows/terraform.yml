@@ -45,9 +45,18 @@
 name: 'Terraform'
 
 on:
-  push:
-    branches: [ "main" ]
+#  push:
+#    branches: [ "main" ]
   pull_request:
+  workflow_dispatch:
+    inputs:
+      status:
+        type: choice
+        description: Terraform
+        options: 
+        - apply
+        - destroy
+
 
 permissions:
   contents: read
@@ -95,6 +104,6 @@ jobs:
 
       # On push to "main", build or change infrastructure according to Terraform configuration files
       # Note: It is recommended to set up a required "strict" status check in your repository for "Terraform Cloud". See the documentation on "strict" required status checks for more information: https://help.github.com/en/github/administering-a-repository/types-of-required-status-checks
-    - name: Terraform Apply
+    - name: Terraform ${{ github.event.inputs.status }}
       if: github.ref == 'refs/heads/"main' && github.event_name == 'push'
-      run: terraform -chdir=terraform apply -auto-approve -input=false
+      run: terraform -chdir=terraform ${{ github.event.inputs.status }} -auto-approve -input=false
