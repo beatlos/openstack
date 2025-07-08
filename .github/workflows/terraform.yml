@@ -111,7 +111,7 @@ jobs:
       id: tf_output
       run: |
         cd terraform
-        public_ips=$(terraform output -json | jq -r '.public_ips.value | to_entries | map("\(.key)=\(.value)") | .[]')
+        public_ip=$(terraform output -json | jq -r ".public_ips.sunbeam01.value.ipv4_address")
         echo "$public_ips"
         echo "public_ips=${public_ips}" >> $GITHUB_OUTPUT
 
