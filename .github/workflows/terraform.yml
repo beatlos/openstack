@@ -107,10 +107,11 @@ jobs:
     - name: Terraform ${{ github.event.inputs.status }}
       run: terraform -chdir=terraform ${{ github.event.inputs.status }} -auto-approve -input=false
 
-    - name: Get Terraform Output
+    - name: Get all public IPs
       id: tf_output
       run: |
         cd terraform
-        public_ip=$(terraform output -json | jq -r ".public_ips.value.ipv4_address")
-        echo "$public_ip"
-        echo "public_ip=${public_ip}" >> $GITHUB_OUTPUT
+        public_ips=$(terraform output -json | jq -r '.public_ips.value | to_entries | map("\(.key)=\(.value)") | .[]')
+        echo "$public_ips"
+        echo "public_ips=${public_ips}" >> $GITHUB_OUTPUT
+
