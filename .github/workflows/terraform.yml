@@ -73,22 +73,16 @@ jobs:
       with:
         cli_config_credentials_token: ${{ secrets.TF_API_TOKEN }}
 
-    # Change to working directory
-    - name: Change to terraform directory
-      run: cd terraform
-
     # Initialize a new or existing Terraform working directory by creating initial files, loading any remote state, downloading modules, etc.
     - name: Terraform Init
-      run: terraform init
+      run: |
+        terraform -chdir=terraform init
+        pwd
+        ls -la
 
     # Checks that all Terraform configuration files adhere to a canonical format
     - name: Terraform Format
       run: terraform fmt -check
-
-    - name: TEST
-      run: |
-          pwd
-          ls -la
 
     # Generates an execution plan for Terraform
     - name: Terraform Plan
