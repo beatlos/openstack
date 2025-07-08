@@ -1,9 +1,3 @@
-locals {
-  firewall_map = {
-    web   = hcloud_firewall.web.id
-    admin = hcloud_firewall.admin.id
-  }
-}
 
 resource "hcloud_server" "servers" {
   for_each    = var.servers
@@ -14,7 +8,8 @@ resource "hcloud_server" "servers" {
   ssh_keys    = [hcloud_ssh_key.default.id]
 
   firewall_ids = [
-    for fw in each.value.firewalls : hcloud_firewall.${fw}.id
+    hcloud_firewall.web.id,
+    hcloud_firewall.admin.id
   ]
 
   network {
