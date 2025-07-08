@@ -106,3 +106,11 @@ jobs:
       # Note: It is recommended to set up a required "strict" status check in your repository for "Terraform Cloud". See the documentation on "strict" required status checks for more information: https://help.github.com/en/github/administering-a-repository/types-of-required-status-checks
     - name: Terraform ${{ github.event.inputs.status }}
       run: terraform -chdir=terraform ${{ github.event.inputs.status }} -auto-approve -input=false
+
+    - name: Get Terraform Output
+      id: tf_output
+      run: |
+        cd terraform
+        public_ip=$(terraform output -json | jq -r ".public_ips.value.ipv4_address")
+        echo "$public_ip"
+        echo "public_ip=${public_ip}" >> $GITHUB_OUTPUT
