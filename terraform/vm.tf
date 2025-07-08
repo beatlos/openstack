@@ -1,3 +1,10 @@
+locals {
+  firewall_map = {
+    web   = hcloud_firewall.web.id
+    admin = hcloud_firewall.admin.id
+  }
+}
+
 resource "hcloud_server" "servers" {
   for_each    = var.servers
   name        = each.key
