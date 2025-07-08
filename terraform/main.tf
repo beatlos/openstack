@@ -3,7 +3,7 @@ terraform {
     organization = "beatlos"
 
     workspaces {
-      name = "hetzner"
+      name = "openstack-poc"
     }
   }
 }
